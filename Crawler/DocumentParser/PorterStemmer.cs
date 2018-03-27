@@ -28,6 +28,10 @@ namespace DocumentParser
         // Index of the (potential) end of the stem word in the char array.
         private int stemIndex;
 
+        public static string StemText(string text)
+        {
+
+        }
 
         /// <summary>
         /// Stem the passed in word.
