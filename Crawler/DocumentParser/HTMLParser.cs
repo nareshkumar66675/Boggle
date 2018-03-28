@@ -11,7 +11,19 @@ namespace DocumentParser
     {
         public static string RemoveHTMLTags(string htmlDoc)
         {
+            htmlDoc = StripScripts(htmlDoc);
             return StripTagsCharArray(htmlDoc);
+        }
+
+        static Regex _scriptRegex = new Regex("(\\<script(.+?)\\</script\\>)|(\\<style(.+?)\\</style\\>)", RegexOptions.Compiled|
+            RegexOptions.Singleline | RegexOptions.IgnoreCase);
+
+        private static string StripScripts(string text)
+        {
+
+            string ouput = _scriptRegex.Replace(text, "");
+
+            return ouput;
         }
 
         static Regex _htmlRegex = new Regex("<.*?>", RegexOptions.Compiled);

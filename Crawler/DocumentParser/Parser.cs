@@ -15,7 +15,10 @@ namespace DocumentParser
             result = PreProcess(result);
             result = StopWords.ApplyStopWords(result);
 
-            return "";
+            PorterStemmer porter = new PorterStemmer();
+            result=porter.StemText(result);
+
+            return result;
         }
 
         private string PreProcess(string text)
@@ -24,7 +27,7 @@ namespace DocumentParser
             //Convert To Lower
             result = text.ToLower();
             //Remove Punctuations
-            result = new string(result.Where(c => !char.IsPunctuation(c)).ToArray());
+            result = new string(result.Where(c => (!char.IsPunctuation(c)||!char.IsNumber(c))).ToArray());
             return result;
         }
     }

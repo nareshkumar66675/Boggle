@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DocumentParser
 {
@@ -28,8 +31,23 @@ namespace DocumentParser
         // Index of the (potential) end of the stem word in the char array.
         private int stemIndex;
 
-        public static string StemText(string text)
+        public string StemText(string text)
         {
+            var words=text.Split(' ').ToList();
+
+            StringBuilder result = new StringBuilder();
+
+            //Parallel.ForEach(words, (word) =>
+            //{
+            //    word = StemWord(word);
+            //});
+
+            words.ForEach( (word) =>
+            {
+                word = StemWord(word);
+            });
+
+            return string.Join(" ", words);
 
         }
 
