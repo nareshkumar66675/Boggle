@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DocumentParser
@@ -15,7 +16,7 @@ namespace DocumentParser
             var stopWords = stopWordsString.Split(',').ToList();
             stopWords.ForEach(stopWord =>
             {
-                text = text.Replace(stopWord.ToLower(), "");
+                text = Regex.Replace(text, @"\b"+ stopWord.ToLower() + @"\b", "");
             });
 
             return text;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +34,8 @@ namespace DocumentParser
 
         public string StemText(string text)
         {
-            var words=text.Split(' ').ToList();
+            string[] delimitters = { " " };
+            var words=text.Split(delimitters,StringSplitOptions.RemoveEmptyEntries).ToList();
 
             StringBuilder result = new StringBuilder();
 
@@ -41,13 +43,13 @@ namespace DocumentParser
             //{
             //    word = StemWord(word);
             //});
-
+            List<string> resultWords = new List<string>();
             words.ForEach( (word) =>
             {
-                word = StemWord(word);
+                resultWords.Add(StemWord(word.Trim()));
             });
 
-            return string.Join(" ", words);
+            return string.Join(" ", resultWords);
 
         }
 

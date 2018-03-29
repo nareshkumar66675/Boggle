@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DocumentParser
@@ -26,8 +27,11 @@ namespace DocumentParser
             string result = string.Empty;
             //Convert To Lower
             result = text.ToLower();
+            result = Regex.Replace(result, @"\s+|\n+|\t+"," ");
+            //result = result.Replace("\n", " ").Replace("\t"," ");
             //Remove Punctuations
-            result = new string(result.Where(c => (!char.IsPunctuation(c)||!char.IsNumber(c))).ToArray());
+            result = new string(result.Where(c => 
+            (!char.IsPunctuation(c)&&!char.IsNumber(c))).ToArray());
             return result;
         }
     }
