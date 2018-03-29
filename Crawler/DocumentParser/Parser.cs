@@ -28,8 +28,8 @@ namespace DocumentParser
             //Convert To Lower
             result = text.ToLower();
             result = Regex.Replace(result, @"\s+|\n+|\t+"," ");
-            //result = result.Replace("\n", " ").Replace("\t"," ");
-            //Remove Punctuations
+
+            //Remove Punctuations & Numbers
             result = new string(result.Where(c => 
             (!char.IsPunctuation(c)&&!char.IsNumber(c))).ToArray());
             return result;

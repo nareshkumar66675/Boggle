@@ -14,13 +14,18 @@ namespace Crawler
         {
             Parser parser = new Parser();
 
-            string text = File.ReadAllText(@"C:\Users\Naresh\Downloads\docsnew\docsnew\Atlanta_Falcons_seasons.htm");
+            string text = string.Empty;//= File.ReadAllText(@"C:\Users\Naresh\Downloads\docsnew\docsnew\Atlanta_Falcons_seasons.htm");
 
-            var result = parser.Parse(text);
+            Directory.EnumerateFiles(@"C:\Users\Naresh\Downloads\docsnew\docsnew\").ToList().ForEach(t =>
+            {
+                text = File.ReadAllText(t);
+                var result = parser.Parse(text);
 
-            File.WriteAllText(@"C: \Users\Naresh\Desktop\htm.txt", result);
+                File.WriteAllText(Path.Combine(@"C:\Users\Naresh\Desktop\HTML", Path.GetFileName(t)), result);
+            });
 
-            Console.WriteLine(result);
+
+            Console.WriteLine("");
 
         }
     }
