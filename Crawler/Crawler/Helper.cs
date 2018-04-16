@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -60,6 +61,23 @@ namespace Crawler
                 }
             }
             return list;
+        }
+
+        public static void WriteHtmlToFile(string htmlText, URLData urlData)
+        {
+            string metaData = string.Format("/* URI:{0} ;:| Hit:{1} ;:| Hierarchy */\n",urlData.URL.AbsoluteUri,urlData.Hit,urlData.Hierarchy);
+
+            string fileName =Path.GetFileName(urlData.URL.LocalPath);
+            string fullPath = Path.Combine(Config.HtmlFolder, Path.GetFileNameWithoutExtension(fileName),"html");
+            int count = 1;
+            while(File.Exists(fullPath))
+            {
+                fullPath = Path.Combine(Config.HtmlFolder, Path.GetFileNameWithoutExtension(fileName) + count, ".html");
+                count++;
+            }
+
+            File.WriteAllText(fullPath, metaData + htmlText);
+
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentParser;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,8 +28,10 @@ namespace Crawler
                         if(urlData.Hierarchy<=Config.MaxHierarchyLevel)
                         {
                             var allLinks = Helper.GetAllValidHyperLinks(htmlText);
+                            AddAllHyperLinks(allLinks, urlData.Hierarchy);
                         }
-
+                        Parser parser = new Parser();
+                        var parseHTML = parser.Parse(htmlText);
 
 
                     }
@@ -43,26 +46,26 @@ namespace Crawler
         {
             foreach (var uriItem in URIList)
             {
-                if(Frontier.CompletedQueue.ContainsKey(uriItem.AbsoluteUri))//Already Crawled
+                if(Frontier.CompletedQueue.ContainsKey(uriItem.GetLeftPart(UriPartial.Path)))//Already Crawled
                 {
-                    if (Frontier.CompletedQueue.TryGetValue(uriItem.AbsoluteUri, out URLData completed))
+                    if (Frontier.CompletedQueue.TryGetValue(uriItem.GetLeftPart(UriPartial.Path), out URLData completed))
                     {
                         completed.IncreaseHit();//Increase the Hit in complete queue
                     }
                 }
-                else if(Frontier.CurrentQueue.ContainsKey(uriItem.AbsoluteUri))//Already in queue
+                else if(Frontier.CurrentQueue.ContainsKey(uriItem.GetLeftPart(UriPartial.Path)))//Already in queue
                 {
-                    if (Frontier.CurrentQueue.TryGetValue(uriItem.AbsoluteUri, out URLData notCompleted))
+                    if (Frontier.CurrentQueue.TryGetValue(uriItem.GetLeftPart(UriPartial.Path), out URLData notCompleted))
                     {
                         notCompleted.IncreaseHit();//Increase the Hit in current queue
                     }
                 }
-                else
+                else//Not in Current Queue
                 {
                     URLData tempURL = new URLData();
                     tempURL.URL = uriItem;
                     tempURL.Hierarchy = parentHierarchy + 1;
-                    Frontier.CurrentQueue.TryAdd(uriItem.AbsoluteUri, tempURL);
+                    Frontier.CurrentQueue.AddOrUpdate(uriItem.GetLeftPart(UriPartial.Path), tempURL, (k, v) => { v.IncreaseHit(); return v; });
                 }
 
             }

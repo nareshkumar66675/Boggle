@@ -10,5 +10,7 @@ namespace Crawler
     {
         public static readonly int MaxHierarchyLevel = 5;
         public static readonly Uri Domain = new Uri("http://www.imdb.com/");
+
+        public static readonly string HtmlFolder = @"C:\Users\Naresh\Desktop\Html";
     }
 }

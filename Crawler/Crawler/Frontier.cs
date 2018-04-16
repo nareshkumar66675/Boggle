@@ -15,6 +15,12 @@ namespace Crawler
 
         public int Hierarchy { get; set; }
 
+        public URLData()
+        {
+            Hierarchy = 0;
+            Hit = 0;
+        }
+
         public void IncreaseHit()
         {
             Hit++;
