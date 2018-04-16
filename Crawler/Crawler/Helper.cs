@@ -65,14 +65,14 @@ namespace Crawler
 
         public static void WriteHtmlToFile(string htmlText, URLData urlData)
         {
-            string metaData = string.Format("/* URI:{0} ;:| Hit:{1} ;:| Hierarchy */\n",urlData.URL.AbsoluteUri,urlData.Hit,urlData.Hierarchy);
+            string metaData = string.Format("/* URI:{0} ;:| Hit:{1} ;:| Hierarchy:{2} */\n",urlData.URL.AbsoluteUri,urlData.Hit,urlData.Hierarchy);
 
-            string fileName =Path.GetFileName(urlData.URL.LocalPath);
-            string fullPath = Path.Combine(Config.HtmlFolder, Path.GetFileNameWithoutExtension(fileName),"html");
+            string fileName =Path.GetFileName(urlData.URL.LocalPath).Trim(new char[] { '\\', '/' });
+            string fullPath = Path.Combine(Config.HtmlFolder, Path.GetFileNameWithoutExtension(fileName)+".htmltxt");
             int count = 1;
             while(File.Exists(fullPath))
             {
-                fullPath = Path.Combine(Config.HtmlFolder, Path.GetFileNameWithoutExtension(fileName) + count, ".html");
+                fullPath = Path.Combine(Config.HtmlFolder, Path.GetFileNameWithoutExtension(fileName) + count+".htmltxt");
                 count++;
             }
 

@@ -12,24 +12,33 @@ namespace Crawler
     {
         public static string RetrieveHTML(string urlString)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlString);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlString);
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
-            //Console.WriteLine("Content length is {0}", response.ContentLength);
-            //Console.WriteLine("Content type is {0}", response.ContentType);
+                //Console.WriteLine("Content length is {0}", response.ContentLength);
+                //Console.WriteLine("Content type is {0}", response.ContentType);
 
-            // Get the stream associated with the response.
-            Stream receiveStream = response.GetResponseStream();
+                // Get the stream associated with the response.
+                Stream receiveStream = response.GetResponseStream();
 
-            // Pipes the stream to a higher level stream reader with the required encoding format. 
-            StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
-            var result = readStream.ReadToEnd();
-            //Console.WriteLine(stop.Elapsed);
-            //Console.WriteLine("Response stream received.");
-            //Console.WriteLine();
-            response.Close();
-            readStream.Close();
-            return result;
+                // Pipes the stream to a higher level stream reader with the required encoding format. 
+                StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
+                var result = readStream.ReadToEnd();
+                //Console.WriteLine(stop.Elapsed);
+                //Console.WriteLine("Response stream received.");
+                //Console.WriteLine();
+                response.Close();
+                readStream.Close();
+                return result;
+            }
+            catch (WebException wEx)
+            {
+                Console.WriteLine(urlString);
+                Console.WriteLine(wEx);
+                return null;
+            }
         }
     }
 }

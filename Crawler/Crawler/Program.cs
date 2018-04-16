@@ -14,22 +14,30 @@ namespace Crawler
     {
         static void Main(string[] args)
         {
-            //var a= Environment.ProcessorCount;
-            RetrieveHTML();
-            Parser parser = new Parser();
+            ////var a= Environment.ProcessorCount;
+            //RetrieveHTML();
+            //Parser parser = new Parser();
 
-            string text = string.Empty;//= File.ReadAllText(@"C:\Users\Naresh\Downloads\docsnew\docsnew\Atlanta_Falcons_seasons.htm");
+            //string text = string.Empty;//= File.ReadAllText(@"C:\Users\Naresh\Downloads\docsnew\docsnew\Atlanta_Falcons_seasons.htm");
 
-            Directory.EnumerateFiles(@"C:\Users\Naresh\Downloads\docsnew\docsnew\").ToList().ForEach(t =>
-            {
-                text = File.ReadAllText(t);
-                var result = parser.Parse(text);
+            //Directory.EnumerateFiles(@"C:\Users\Naresh\Downloads\docsnew\docsnew\").ToList().ForEach(t =>
+            //{
+            //    text = File.ReadAllText(t);
+            //    var result = parser.Parse(text);
 
-                File.WriteAllText(Path.Combine(@"C:\Users\Naresh\Desktop\HTML", Path.GetFileName(t)), result);
-            });
+            //    File.WriteAllText(Path.Combine(@"C:\Users\Naresh\Desktop\HTML", Path.GetFileName(t)), result);
+            //});
 
-            
-            Console.WriteLine("");
+
+            //Console.WriteLine("");
+
+            Spyders spyd = new Spyders();
+
+            URLData urlData = new URLData();
+            urlData.URL = Config.Domain;
+            Frontier.CurrentQueue.TryAdd(Config.Domain.GetLeftPart(UriPartial.Path), urlData);
+
+            spyd.Crawl();
 
         }
         public static void RetrieveHTML()

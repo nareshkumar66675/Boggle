@@ -39,7 +39,7 @@ namespace Crawler
 
         static Frontier()
         {
-            CurrentQueue = new ConcurrentDictionary<string, URLData>(Environment.ProcessorCount * 2, 200);
+            CurrentQueue = new ConcurrentDictionary<string, URLData>(Environment.ProcessorCount * 2, 200000);
             CompletedQueue = new ConcurrentDictionary<string, URLData>(Environment.ProcessorCount * 2, 10000);
         }
          

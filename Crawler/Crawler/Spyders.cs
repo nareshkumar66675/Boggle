@@ -25,14 +25,27 @@ namespace Crawler
                     else
                     {
                         var htmlText = WebCall.RetrieveHTML(key);
-                        if(urlData.Hierarchy<=Config.MaxHierarchyLevel)
+                        if(!string.IsNullOrEmpty(htmlText)) // If No Html is returned
                         {
-                            var allLinks = Helper.GetAllValidHyperLinks(htmlText);
-                            AddAllHyperLinks(allLinks, urlData.Hierarchy);
-                        }
-                        Parser parser = new Parser();
-                        var parseHTML = parser.Parse(htmlText);
+                            if (urlData.Hierarchy <= Config.MaxHierarchyLevel)
+                            {
+                                var allLinks = Helper.GetAllValidHyperLinks(htmlText);
+                                AddAllHyperLinks(allLinks, urlData.Hierarchy);
+                            }
+                            Parser parser = new Parser();
+                            var parseHTML = parser.Parse(htmlText);
 
+                            Helper.WriteHtmlToFile(parseHTML, urlData);
+                        }
+                        Console.WriteLine("/* URI:{0} ;:| Hit:{1} ;:| Hierarchy:{2} */\n", urlData.URL.AbsoluteUri, urlData.Hit, urlData.Hierarchy);
+                        int Iteration = 0;
+                        while(!Frontier.CompletedQueue.TryAdd(urlData.URL.GetLeftPart(UriPartial.Path), urlData)) // Add to completed Queue
+                        {
+                            Thread.Sleep(1000);
+                            if (Iteration > 100)
+                                break;
+                            Iteration++;
+                        }
 
                     }
                 }else
@@ -80,11 +93,15 @@ namespace Crawler
                 {
                     Thread.Sleep(5000);
                 }
+                else
+                {
+                    break;
+                }
             }
             if (count > 99)
                 return null;
             else
-                return Frontier.CurrentQueue.OrderBy(t => t.Value.Hit).FirstOrDefault().Key;
+                return Frontier.CurrentQueue.OrderByDescending(t => t.Value.Hit).FirstOrDefault().Key;
         }
     }
 }
