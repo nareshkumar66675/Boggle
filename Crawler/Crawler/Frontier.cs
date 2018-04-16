@@ -9,7 +9,7 @@ namespace Crawler
 {
     public class URLData
     {
-        public string URL { get; set; }
+        public Uri URL { get; set; }
 
         public int Hit { get; set; } 
 
