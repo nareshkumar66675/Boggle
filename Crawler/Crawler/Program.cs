@@ -31,13 +31,13 @@ namespace Crawler
 
             //Console.WriteLine("");
 
-            Spyders spyd = new Spyders();
+            Crawler crawl = new Crawler();
 
             URLData urlData = new URLData();
             urlData.URL = Config.Domain;
             Frontier.CurrentQueue.TryAdd(Config.Domain.GetLeftPart(UriPartial.Path), urlData);
 
-            spyd.Crawl();
+            crawl.Crawl(5);
 
         }
         public static void RetrieveHTML()

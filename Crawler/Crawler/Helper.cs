@@ -14,6 +14,9 @@ namespace Crawler
         static Regex _LinkRegex = new Regex(@"(<a.*?>.*?</a>)", RegexOptions.Compiled| RegexOptions.Singleline);
         static Regex _hrefRegex = new Regex(@"href=\""(.*?)\""", RegexOptions.Compiled | RegexOptions.Singleline);
 
+        static int fileNumber = 0;
+        private static Object thisLock = new Object();
+
         public static List<Uri> GetAllValidHyperLinks(string file)
         {
             List<Uri> list = new List<Uri>();
@@ -72,7 +75,13 @@ namespace Crawler
             int count = 1;
             while(File.Exists(fullPath))
             {
-                fullPath = Path.Combine(Config.HtmlFolder, Path.GetFileNameWithoutExtension(fileName) + count+".htmltxt");
+                var fileNo = 0;
+                lock(thisLock)
+                {
+                    fileNo = fileNumber;
+                    fileNumber++;
+                }
+                fullPath = Path.Combine(Config.HtmlFolder, Path.GetFileNameWithoutExtension(fileName) + fileNo + ".htmltxt");
                 count++;
             }
 

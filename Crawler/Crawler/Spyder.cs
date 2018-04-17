@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Crawler
 {
-    public class Spyders
+    public class Spyder
     {
-        public void Crawl()
+        public void Start()
         {
             string key = string.Empty;
             while((key=GetNextUrl())!=null)
             {
-                if(Frontier.CurrentQueue.TryGetValue(key,out URLData urlData))
+                if(Frontier.CurrentQueue.TryRemove(key,out URLData urlData))
                 {
                     if(Frontier.CompletedQueue.ContainsKey(key))//If its already completed
                     {
@@ -37,7 +37,8 @@ namespace Crawler
 
                             Helper.WriteHtmlToFile(parseHTML, urlData);
                         }
-                        Console.WriteLine("/* URI:{0} ;:| Hit:{1} ;:| Hierarchy:{2} */\n", urlData.URL.AbsoluteUri, urlData.Hit, urlData.Hierarchy);
+                        //Console.WriteLine("/* URI:{0} ;:| Hit:{1} ;:| Hierarchy:{2} */\n", urlData.URL.AbsoluteUri, urlData.Hit, urlData.Hierarchy);
+                        //Console.WriteLine("Current Queue {0}  Completed Queue {1}", Frontier.CurrentQueue.Count, Frontier.CompletedQueue.Count);
                         int Iteration = 0;
                         while(!Frontier.CompletedQueue.TryAdd(urlData.URL.GetLeftPart(UriPartial.Path), urlData)) // Add to completed Queue
                         {
