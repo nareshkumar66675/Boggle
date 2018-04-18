@@ -35,8 +35,9 @@ namespace Crawler
 
             URLData urlData = new URLData();
             urlData.URL = Config.Domain;
-            Frontier.CurrentQueue.TryAdd(Config.Domain.GetLeftPart(UriPartial.Path), urlData);
-
+            //Frontier.CurrentQueue.TryAdd(Config.Domain.GetLeftPart(UriPartial.Path), urlData);
+            
+            Frontier.CurrentQueue.TryAdd(@"https://en.wikipedia.org/wiki/India", urlData);
             crawl.Crawl(5);
 
         }

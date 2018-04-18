@@ -1,6 +1,7 @@
 ﻿using DocumentParser;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -40,13 +41,14 @@ namespace Crawler
                         //Console.WriteLine("/* URI:{0} ;:| Hit:{1} ;:| Hierarchy:{2} */\n", urlData.URL.AbsoluteUri, urlData.Hit, urlData.Hierarchy);
                         //Console.WriteLine("Current Queue {0}  Completed Queue {1}", Frontier.CurrentQueue.Count, Frontier.CompletedQueue.Count);
                         int Iteration = 0;
-                        while(!Frontier.CompletedQueue.TryAdd(urlData.URL.GetLeftPart(UriPartial.Path), urlData)) // Add to completed Queue
-                        {
-                            Thread.Sleep(1000);
-                            if (Iteration > 100)
-                                break;
-                            Iteration++;
-                        }
+                        Frontier.CompletedQueue.TryAdd(urlData.URL.GetLeftPart(UriPartial.Path), urlData);
+                        //while(!Frontier.CompletedQueue.TryAdd(urlData.URL.GetLeftPart(UriPartial.Path), urlData)) // Add to completed Queue
+                        //{
+                        //    Thread.Sleep(1000);
+                        //    if (Iteration > 100)
+                        //        break;
+                        //    Iteration++;
+                        //}
 
                     }
                 }else
@@ -99,10 +101,35 @@ namespace Crawler
                     break;
                 }
             }
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             if (count > 99)
                 return null;
             else
-                return Frontier.CurrentQueue.OrderByDescending(t => t.Value.Hit).FirstOrDefault().Key;
+            {
+                try
+                {
+                    var result = Frontier.CurrentQueue.OrderByDescending(t => t.Value.Hit).FirstOrDefault().Key;
+
+                    //StringBuilder sb = new StringBuilder();
+                    //string str;
+                    //Frontier.CompletedQueue.ToList().ForEach(t =>
+                    //{
+                    //    str +=string.Format("{0} |:| {1} |:| {2}", t.Key, t.Value.Hit, t.Value.Hierarchy);
+                    //});
+                    //var str = sb.ToString();
+                    sw.Stop();
+                    if (sw.ElapsedMilliseconds > 1000)
+                        Console.WriteLine("Elapsed: " + sw.ElapsedMilliseconds * 1000);
+                    return result;
+                }
+                catch (Exception)
+                {
+
+                    return null;
+                }
+            }
+
         }
     }
 }
