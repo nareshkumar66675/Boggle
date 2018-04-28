@@ -34,11 +34,11 @@ namespace Crawler
             Crawler crawl = new Crawler();
 
             URLData urlData = new URLData();
-            urlData.URL = Config.Domain;
+            urlData.URL = new Uri("https://en.wikipedia.org/wiki/India");
             //Frontier.CurrentQueue.TryAdd(Config.Domain.GetLeftPart(UriPartial.Path), urlData);
             
             Frontier.CurrentQueue.TryAdd(@"https://en.wikipedia.org/wiki/India", urlData);
-            crawl.Crawl(5);
+            crawl.Crawl(Config.MaxThreads);
 
         }
         public static void RetrieveHTML()

@@ -9,6 +9,8 @@ namespace Crawler
     public static class Config
     {
         public static readonly int MaxHierarchyLevel = 5;
+        public static readonly int MaxDocumentCount = 50;
+        public static readonly int MaxThreads = 5;
         public static readonly Uri Domain = new Uri("https://www.wikipedia.org/");
         public static readonly string DomainName = "en.wikipedia.org";
 

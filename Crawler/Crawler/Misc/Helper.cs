@@ -14,9 +14,9 @@ namespace Crawler
         static Regex _LinkRegex = new Regex(@"(<a.*?>.*?</a>)", RegexOptions.Compiled| RegexOptions.Singleline);
         static Regex _hrefRegex = new Regex(@"href=\""(.*?)\""", RegexOptions.Compiled | RegexOptions.Singleline);
         static Regex _ExtensionRegex = new Regex(@"^.*\.(jpg|JPG|gif|GIF|doc|DOC|pdf|PDF|mp3|mp4|JPEG|)$", RegexOptions.Compiled | RegexOptions.Singleline);
-        
+
         //static Regex _subDomainRegex = new Regex(@"^.")
-        static int fileNumber = 0;
+        private static int fileNumber = 1;
         private static Object thisLock = new Object();
         private static string[] validSchemes = { "http", "https" };
 
@@ -77,36 +77,58 @@ namespace Crawler
         {
             return Path.GetInvalidFileNameChars().Aggregate(fileName, (current, c) => current.Replace(c.ToString(), string.Empty));
         }
-        public static void WriteHtmlToFile(string htmlText, URLData urlData)
+
+        public static void WriteCompletedQueue()
+        {
+            StringBuilder sb = new StringBuilder();
+            Frontier.CompletedQueue.OrderBy(t=>t.Value.FileNo).ToList().ForEach(completed =>
+            {
+                sb.AppendLine(string.Format("FileNo: {5} |:| Key: \"{0}\" |:| URL: \"{1}\" |:| Hit: {2} |:| Hierarchy {3} |:| Status: {4}", 
+                    completed.Key,completed.Value.URL.AbsoluteUri, completed.Value.Hit, completed.Value.Hierarchy,completed.Value.Status.ToString(),completed.Value.FileNo));
+            });
+
+            string fileName = "CompletedCrawlDetails" + DateTime.Now.ToString("MMddyyyy_HHmmss")+".txt";
+
+            File.WriteAllText(Path.Combine(Config.HtmlFolder, fileName),sb.ToString());
+        }
+
+        public static int GetFileNumber()
+        {
+            var fileNo = 0;
+            lock (thisLock)
+            {
+                fileNo = fileNumber;
+                fileNumber++;
+            }
+            return fileNo;
+        }
+
+        public static bool WriteHtmlToFile(string htmlText, URLData urlData)
         {
             try
             {
-                string metaData = string.Format("/* URI:{0} ;:| Hit:{1} ;:| Hierarchy:{2} */\n", urlData.URL.AbsoluteUri, urlData.Hit, urlData.Hierarchy);
+                //string metaData = string.Format("/* URI:{0} ;:| Hit:{1} ;:| Hierarchy:{2} */\n", urlData.URL.AbsoluteUri, urlData.Hit, urlData.Hierarchy);
 
-                string fileName = Path.GetFileName(urlData.URL.LocalPath).Trim(new char[] { '\\', '/' });
+                //string fileName = Path.GetFileName(urlData.URL.LocalPath).Trim(new char[] { '\\', '/' });
 
-                if (fileName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
-                    fileName = CleanFileName(fileName);
-                int count = 1;
-                string fullPath = Path.Combine(Config.HtmlFolder, Path.GetFileNameWithoutExtension(fileName) + ".htmltxt");
-                while (File.Exists(fullPath))
-                {
-                    var fileNo = 0;
-                    lock (thisLock)
-                    {
-                        fileNo = fileNumber;
-                        fileNumber++;
-                    }
-                    fullPath = Path.Combine(Config.HtmlFolder, Path.GetFileNameWithoutExtension(fileName) + fileNo + ".htmltxt");
-                    count++;
-                }
+                //if (fileName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+                //    fileName = CleanFileName(fileName);
+                //int count = 1;
+                //string fullPath = Path.Combine(Config.HtmlFolder, Path.GetFileNameWithoutExtension(fileName) + ".htmltxt");
+                //while (File.Exists(fullPath))
+                //{
+                //var fileNo = GetFileNumber();
+                string fullPath = Path.Combine(Config.HtmlFolder, "Doc_" + urlData.FileNo + ".htm");
+                    //count++;
+                //}
 
-                File.WriteAllText(fullPath, metaData + htmlText);
+                File.WriteAllText(fullPath, htmlText);
+                return true;
             }
             catch (Exception)
             {
 
-                
+                return false;
             }
 
         }

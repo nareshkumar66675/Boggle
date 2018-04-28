@@ -23,6 +23,8 @@ namespace Crawler
                 taskCount++;
             }
             Task.WaitAll(listOfTasks.ToArray());
+
+            Helper.WriteCompletedQueue();
         }
     }
 }

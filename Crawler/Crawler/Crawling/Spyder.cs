@@ -25,6 +25,7 @@ namespace Crawler
                     }
                     else
                     {
+                        bool isSuccess = true;
                         var htmlText = WebCall.RetrieveHTML(key);
                         if(!string.IsNullOrEmpty(htmlText)) // If No Html is returned
                         {
@@ -35,13 +36,29 @@ namespace Crawler
                             }
                             Parser parser = new Parser();
                             var parseHTML = parser.Parse(htmlText);
-
-                            Helper.WriteHtmlToFile(parseHTML, urlData);
+                            urlData.SetFileNumber();
+                            isSuccess = Helper.WriteHtmlToFile(parseHTML, urlData);
                         }
+                        else
+                        {
+                            isSuccess = false;
+                        }
+
+                        if (isSuccess)
+                            urlData.SetSuccess();
+                        else
+                            urlData.SetFailed();
+
+                        
+
                         //Console.WriteLine("/* URI:{0} ;:| Hit:{1} ;:| Hierarchy:{2} */\n", urlData.URL.AbsoluteUri, urlData.Hit, urlData.Hierarchy);
                         //Console.WriteLine("Current Queue {0}  Completed Queue {1}", Frontier.CurrentQueue.Count, Frontier.CompletedQueue.Count);
-                        int Iteration = 0;
+                        //int Iteration = 0;
                         Frontier.CompletedQueue.TryAdd(urlData.URL.GetLeftPart(UriPartial.Path), urlData);
+
+                        if (Frontier.CompletedQueue.Count > Config.MaxDocumentCount)
+                            return;
+
                         //while(!Frontier.CompletedQueue.TryAdd(urlData.URL.GetLeftPart(UriPartial.Path), urlData)) // Add to completed Queue
                         //{
                         //    Thread.Sleep(1000);
@@ -101,8 +118,8 @@ namespace Crawler
                     break;
                 }
             }
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
+            //Stopwatch sw = new Stopwatch();
+            //sw.Start();
             if (count > 99)
                 return null;
             else
@@ -118,9 +135,9 @@ namespace Crawler
                     //    str +=string.Format("{0} |:| {1} |:| {2}", t.Key, t.Value.Hit, t.Value.Hierarchy);
                     //});
                     //var str = sb.ToString();
-                    sw.Stop();
-                    if (sw.ElapsedMilliseconds > 1000)
-                        Console.WriteLine("Elapsed: " + sw.ElapsedMilliseconds * 1000);
+                    //sw.Stop();
+                    //if (sw.ElapsedMilliseconds > 1000)
+                        //Console.WriteLine("Elapsed: " + sw.ElapsedMilliseconds * 1000);
                     return result;
                 }
                 catch (Exception)
