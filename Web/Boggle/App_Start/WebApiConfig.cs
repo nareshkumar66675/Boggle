@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Boggle.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -11,6 +12,8 @@ namespace Boggle
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+
+            SearchService.Initialize();
 
             // Web API routes
             config.MapHttpAttributeRoutes();

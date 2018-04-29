@@ -83,9 +83,10 @@ namespace Crawler
         public static void WriteCompletedQueue()
         {
             StringBuilder sb = new StringBuilder();
+            sb.AppendLine("FileNo|:|Key|:|URL|:|Hit|:|Hierarchy|:|Status");
             Frontier.CompletedQueue.OrderBy(t=>t.Value.FileNo).ToList().ForEach(completed =>
             {
-                sb.AppendLine(string.Format("FileNo: {5} |:| Key: \"{0}\" |:| URL: \"{1}\" |:| Hit: {2} |:| Hierarchy {3} |:| Status: {4}", 
+                sb.AppendLine(string.Format("{5}|:|\"{0}\"|:|\"{1}\"|:|{2}|:|{3}|:|{4}", 
                     completed.Key,completed.Value.URL.AbsoluteUri, completed.Value.Hit, completed.Value.Hierarchy,completed.Value.Status.ToString(),completed.Value.FileNo));
             });
 
