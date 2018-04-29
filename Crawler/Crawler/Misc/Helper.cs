@@ -59,7 +59,7 @@ namespace Crawler
                     Uri result;
                     if (Uri.TryCreate(link, UriKind.Absolute, out result))
                     {
-                        if (result.Host.Contains(Config.DomainName)&& validSchemes.Any(link.Contains))
+                        if (result.AbsoluteUri.Contains(Config.DomainMatch)&& validSchemes.Any(link.Contains))
                             list.Add(result);
                         else
                         {
@@ -67,7 +67,9 @@ namespace Crawler
                         }
                     }else if(Uri.TryCreate(Config.Domain, link,out result))
                     {
-                        list.Add(result);
+                        
+                        if (result.AbsoluteUri.Contains(Config.DomainMatch))
+                            list.Add(result);
                     }
                 }
             }

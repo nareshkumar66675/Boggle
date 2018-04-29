@@ -16,7 +16,7 @@ namespace Crawler
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlString);
                 request.AllowAutoRedirect = true;
-                request.Timeout = 1000;
+                request.Timeout = 10000;
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
                 
