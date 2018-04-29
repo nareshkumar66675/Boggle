@@ -5,11 +5,11 @@ using System.Web;
 
 namespace Boggle.Models
 {
-    public class IDFIndex
+    public class SearchIndex
     {
         public List<DocData> Documents { get; set; }
 
-        public Dictionary<string,float> IDF { get; set; }
+        public Dictionary<string,float> TermIDF { get; set; }
     }
 
     public class DocData
@@ -18,6 +18,11 @@ namespace Boggle.Models
 
         public float Length { get; set; }
 
-        public Dictionary<string,string> Terms { get; set; }
+        public Dictionary<string,float> DocVector { get; set; }
+
+        public DocData()
+        {
+            DocVector = new Dictionary<string, float>();
+        }
     }
 }
