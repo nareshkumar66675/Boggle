@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boggle", "Boggle\Boggle.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentParser", "..\Crawler\DocumentParser\DocumentParser.csproj", "{653ED990-E197-4A5E-B533-3CB2F57204F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoggleUI", "BoggleUI\BoggleUI.csproj", "{07AEBB63-9183-41E1-8726-37886B1ED1C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{653ED990-E197-4A5E-B533-3CB2F57204F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{653ED990-E197-4A5E-B533-3CB2F57204F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{653ED990-E197-4A5E-B533-3CB2F57204F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07AEBB63-9183-41E1-8726-37886B1ED1C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07AEBB63-9183-41E1-8726-37886B1ED1C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07AEBB63-9183-41E1-8726-37886B1ED1C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07AEBB63-9183-41E1-8726-37886B1ED1C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

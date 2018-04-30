@@ -32,8 +32,8 @@ namespace Crawler
             //Console.WriteLine("");
 
             Crawler crawl = new Crawler();
-            //string startUrl = "https://www.imdb.com/chart/top";
-            string startUrl = "https://en.wikipedia.org/wiki/India";
+            string startUrl = "https://www.imdb.com/chart/top";
+            //string startUrl = "https://en.wikipedia.org/wiki/India";
             URLData urlData = new URLData();
             urlData.URL = new Uri(startUrl);
             //Frontier.CurrentQueue.TryAdd(Config.Domain.GetLeftPart(UriPartial.Path), urlData);

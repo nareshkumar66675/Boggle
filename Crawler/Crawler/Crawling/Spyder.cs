@@ -57,7 +57,8 @@ namespace Crawler
                         Frontier.CompletedQueue.TryAdd(urlData.URL.GetLeftPart(UriPartial.Path), urlData);
 
                         if (Frontier.CompletedQueue.Count > Config.MaxDocumentCount)
-                            return;
+                            if(Frontier.CompletedQueue.Where(t=>t.Value.Status == Status.Success).Count() > Config.MaxDocumentCount)
+                                return;
 
                         //while(!Frontier.CompletedQueue.TryAdd(urlData.URL.GetLeftPart(UriPartial.Path), urlData)) // Add to completed Queue
                         //{
