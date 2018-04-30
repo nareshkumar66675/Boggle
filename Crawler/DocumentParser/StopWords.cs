@@ -12,10 +12,15 @@ namespace DocumentParser
 {
     public static class StopWords
     {
+        public static List<string> stopWords = new List<string>();
+
+        static StopWords()
+        {
+            stopWords = ConfigurationManager.AppSettings["StopWords"].Split(',').ToList();
+        }
+
         public static string ApplyStopWords(string text)
         {
-            string stopWordsString = ConfigurationManager.AppSettings["StopWords"];
-            var stopWords = stopWordsString.Split(',').ToList();
             stopWords.ForEach(stopWord =>
             {
                 text = Regex.Replace(text, @"\b"+ stopWord.ToLower() + @"\b", "");
