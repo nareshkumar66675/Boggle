@@ -5,6 +5,14 @@ using System.Web;
 
 namespace Boggle.Models
 {
+    public class OpenGraph
+    {
+        public string Title { get; set; }
+
+        public string Description { get; set; }
+
+        public string SiteName { get; set; }
+    }
 
     public class SearchResult
     {
@@ -15,5 +23,7 @@ namespace Boggle.Models
         public float SimValue { get; set; }
 
         public float Hit { get; set; }
+
+        public OpenGraph MetaData { get; set; }
     }
 }

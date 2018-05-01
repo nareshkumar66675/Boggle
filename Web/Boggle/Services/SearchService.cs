@@ -15,8 +15,14 @@ namespace Boggle.Services
 
         public static void Initialize()
         {
-            crawledData = FileParsers.ParseCrawledData();
-            searchIndex = FileParsers.ParseIndex();
+            var taskCrawlData = Task.Factory.StartNew(() => FileParsers.ParseCrawledData());
+            var taskIndex = Task.Factory.StartNew(() => FileParsers.ParseIndex());
+
+            taskCrawlData.Wait();
+            taskIndex.Wait();
+
+            crawledData = taskCrawlData.Result;
+            searchIndex = taskIndex.Result;
         }
 
         public List<SearchResult> Search(string text)
@@ -56,8 +62,21 @@ namespace Boggle.Services
 
                 searchRslt.Add(rslt);
             }
+            var finalRslt = (from s in searchRslt
+                     orderby s.SimValue descending, s.Hit descending
+                     group s by s.Key into g
+                     select g.First()).Take(2).ToList();
 
-            return searchRslt.OrderByDescending(t => t.SimValue).ThenByDescending(t=>t.Hit).ToList() ;
+            List<Task<OpenGraph>> grpTasks = new List<Task<OpenGraph>>();
+            foreach (var rslt in finalRslt)
+            {
+                var tsk = Task.Factory.StartNew(()  => rslt.MetaData= WebGraph.GetGraphDetails(rslt.URL));
+                grpTasks.Add(tsk);
+            }
+
+            Task.WaitAll(grpTasks.ToArray());
+
+            return finalRslt;
         }
 
         private Dictionary<string,float> GetQueryVector(string[] queryText)

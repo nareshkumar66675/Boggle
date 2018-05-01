@@ -1,0 +1,40 @@
+﻿body {
+}
+input[type=text] {
+    width: 130px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+    /* When the input field gets focus, change its width to 100% */
+    input[type=text]:focus {
+        width: 100%;
+    }
+
+.top30 {
+    padding-top: 30px !important;
+}
+
+.link-color {
+    color: #1a0dab;
+}
+.line-heighp5{
+    line-height:0.5 !important;
+}
+
+.sub-link-color {
+    color: #006621;
+}
+
+.search-desc {
+    font-size: small;
+    color: #545454;
+}
+
+.topPad10{
+    padding-top:10px;
+}
+
+.topPad15 {
+    padding-top: 15px;
+}

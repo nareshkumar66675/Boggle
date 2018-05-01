@@ -29,7 +29,7 @@ namespace Boggle.Helpers
 
                 var values = line.Split(new string[] { "|:|" }, StringSplitOptions.None);
 
-                URLData uRLData = new URLData(values[1], values[2], int.Parse(values[3]), int.Parse(values[4]), (Status)Enum.Parse(typeof(Status), values[5], true), int.Parse(values[0]));
+                URLData uRLData = new URLData(values[1].Trim('"'), values[2].Trim('"'), int.Parse(values[3]), int.Parse(values[4]), (Status)Enum.Parse(typeof(Status), values[5], true), int.Parse(values[0]));
 
                 crawledData.URLs.Add(uRLData);
             }

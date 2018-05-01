@@ -136,6 +136,7 @@
     </Compile>
     <Compile Include="Helpers\FileParsers.cs" />
     <Compile Include="Helpers\QueryParsers.cs" />
+    <Compile Include="Helpers\WebGraph.cs" />
     <Compile Include="Models\SearchIndex.cs" />
     <Compile Include="Models\SearchResult.cs" />
     <Compile Include="Models\CrawledData.cs" />

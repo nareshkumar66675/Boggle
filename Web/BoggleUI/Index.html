@@ -7,9 +7,52 @@
     <script src="Scripts/angular.min.js"></script>
     <script src="App.js"></script>
     <meta charset="utf-8" />
+    <link href="Content/app.css" rel="stylesheet" />
     <title>Boggle</title>
 </head>
 <body ng-app="BoggleApp" ng-controller="Search">
-    <button type="button" class="btn btn-primary" ng-click="Search()">Start Task</button>
+    <div class="container w-75">
+        <div class="row justify-content-center" style="padding-top:30px;">
+            <div class="col-7">
+                <form ng-submit="">
+                    <div class="input-group">
+                        <input ng-model="searchText" class="form-control" type="search" placeholder="Search">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-dark">Search</button>
+                        </span>
+                    </div>
+                </form>
+
+
+                </div>
+            
+        </div>
+        <hr />
+        <div class="topPad15">
+        <div class="row col-8 justify-content-start">
+            <h4><a target="_blank" class="link-color" href="https://en.wikipedia.org/wiki/India">India - Wikipedia</a> </h4>
+        </div>
+        <div class="row col-8 justify-content-start line-heighp5">
+            <cite><a target="_blank" class="sub-link-color" href="https://en.wikipedia.org/wiki/India">https://en.wikipedia.org/wiki/India</a> </cite>
+        </div>
+            <div class="row col-8 justify-content-start topPad10">
+                <span class="search-desc">
+                    India (IAST: Bhārat), also called the Republic of India (IAST: Bhārat Gaṇarājya), is a country in South Asia. It is the seventh-largest country by area, the second-most populous country (with over 1.2 billion people), and the most populous democracy in the world. It is bounded by the Indian Ocean on the south, the Arabian ...
+                </span>
+            </div>
+    </div>
+        <div class="topPad15">
+            <div class="row col-8 justify-content-start">
+                <h4><a target="_blank" class="link-color" href="https://en.wikipedia.org/wiki/India">India - Wikipedia</a> </h4>
+            </div>
+            <div class="row col-8 justify-content-start line-heighp5">
+                <cite><a target="_blank" class="sub-link-color" href="https://en.wikipedia.org/wiki/India">https://en.wikipedia.org/wiki/India</a> </cite>
+            </div>
+            <div class="row row col-8 justify-content-start topPad10">
+                <span class="search-desc">
+                    India (IAST: Bhārat), also called the Republic of India (IAST: Bhārat Gaṇarājya), is a country in South Asia. It is the seventh-largest country by area, the second-most populous country (with over 1.2 billion people), and the most populous democracy in the world. It is bounded by the Indian Ocean on the south, the Arabian ...
+                </span>
+            </div>
+        </div>
 </body>
 </html>
