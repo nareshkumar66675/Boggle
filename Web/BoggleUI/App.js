@@ -17,13 +17,27 @@ app.service('RestCall', ['$http', function ($http) {
 
 app.controller('Search', function ($scope, $interval, RestCall, $timeout) {
     $scope.SearchResults = [];
-    $scope.Search = function () {
-        RestCall.getCallWithParam("Search", "query=" + "abhinav")
+    $scope.Search = function (text) {
+        //$scope.startSpin();
+        RestCall.getCallWithParam("Search", "query=" + text)
             .then(function (response) {
                 $scope.SearchResults = response.data;
+                //$scope.stopSpin();
             })
     }
 
+    //$scope.startSpin = function () {
+    //    if (!$scope.spinneractive) {
+    //        usSpinnerService.spin('spinner-1');
+    //        $scope.startcounter++;
+    //    }
+    //};
+
+    //$scope.stopSpin = function () {
+    //    if ($scope.spinneractive) {
+    //        usSpinnerService.stop('spinner-1');
+    //    }
+    //};
     //$scope.data = [];
     //$scope.logData = [];
     //$scope.status = null;

@@ -5,6 +5,7 @@
     <script src="Scripts/jquery-3.3.1.min.js"></script>
     <script src="Scripts/bootstrap.min.js"></script>
     <script src="Scripts/angular.min.js"></script>
+    
     <script src="App.js"></script>
     <meta charset="utf-8" />
     <link href="Content/app.css" rel="stylesheet" />
@@ -12,14 +13,20 @@
 </head>
 <body ng-app="BoggleApp" ng-controller="Search">
     <div class="container w-75">
-        <div class="row justify-content-center" style="padding-top:30px;">
-            <div class="col-7">
-                <form ng-submit="">
+        <div class="row justify-content-start" style="padding-top:30px;">
+            <div class=" col-3">
+                <img height="60"  src="Img/Boggle.png" /></div>
+            <div class="col-9">
+                <form ng-submit="Search(searchText)">
                     <div class="input-group">
-                        <input ng-model="searchText" class="form-control" type="search" placeholder="Search">
-                        <span class="input-group-btn">
-                            <button type="submit" class="btn btn-dark">Search</button>
-                        </span>
+                        <div class="col-8">
+                            <input ng-model="searchText" class="form-control" type="search" placeholder="Search">
+                        </div>
+                        <div class="col-3">
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </span>
+                        </div>
                     </div>
                 </form>
 
@@ -28,7 +35,7 @@
             
         </div>
         <hr />
-        <div class="topPad15">
+        <!--<div class="topPad15">
         <div class="row col-8 justify-content-start">
             <h4><a target="_blank" class="link-color" href="https://en.wikipedia.org/wiki/India">India - Wikipedia</a> </h4>
         </div>
@@ -40,8 +47,8 @@
                     India (IAST: Bhārat), also called the Republic of India (IAST: Bhārat Gaṇarājya), is a country in South Asia. It is the seventh-largest country by area, the second-most populous country (with over 1.2 billion people), and the most populous democracy in the world. It is bounded by the Indian Ocean on the south, the Arabian ...
                 </span>
             </div>
-    </div>
-        <div class="topPad15">
+    </div>-->
+        <!--<div class="topPad15">
             <div class="row col-8 justify-content-start">
                 <h4><a target="_blank" class="link-color" href="https://en.wikipedia.org/wiki/India">India - Wikipedia</a> </h4>
             </div>
@@ -53,6 +60,24 @@
                     India (IAST: Bhārat), also called the Republic of India (IAST: Bhārat Gaṇarājya), is a country in South Asia. It is the seventh-largest country by area, the second-most populous country (with over 1.2 billion people), and the most populous democracy in the world. It is bounded by the Indian Ocean on the south, the Arabian ...
                 </span>
             </div>
+        </div>-->
+        <div>
+            <div ng-repeat="result in SearchResults" class="topPad15">
+                <div class="row col-8 justify-content-start">
+                    <h4><a target="_blank" class="link-color" href="{{result.URL}}">{{result.MetaData.Title}} - {{result.MetaData.SiteName}}</a> </h4>
+                </div>
+                <div class="row col-8 justify-content-start line-heighp5">
+                    <cite><a target="_blank" class="sub-link-color" href="{{result.URL}}">{{result.Key}}</a> </cite>
+                </div>
+                <div class="row row col-8 justify-content-start topPad10">
+                    <span class="search-desc">
+                        {{result.MetaData.Description}}
+                    </span>
+                </div>
+            </div>
+        </div>
+
         </div>
 </body>
+
 </html>

@@ -65,7 +65,7 @@ namespace Boggle.Services
             var finalRslt = (from s in searchRslt
                      orderby s.SimValue descending, s.Hit descending
                      group s by s.Key into g
-                     select g.First()).Take(2).ToList();
+                     select g.First()).Take(10).ToList();
 
             List<Task<OpenGraph>> grpTasks = new List<Task<OpenGraph>>();
             foreach (var rslt in finalRslt)
