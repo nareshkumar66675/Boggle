@@ -13,7 +13,8 @@ app.service('RestCall', ['$http', function ($http) {
         return $http.get(urlBase + name+'?'+param);
     };
 
-}]);
+ }]);
+
 
 app.controller('Search', function ($scope, $interval, RestCall, $timeout) {
     $scope.SearchResults = [];
@@ -25,6 +26,10 @@ app.controller('Search', function ($scope, $interval, RestCall, $timeout) {
                 //$scope.stopSpin();
             })
     }
+
+    //$scope.$watch('SearchResults', function () {
+    //    $timeout($('[data-toggle="popover"]').popover(),5);
+    //});
 
     //$scope.startSpin = function () {
     //    if (!$scope.spinneractive) {
@@ -51,9 +56,9 @@ app.controller('Search', function ($scope, $interval, RestCall, $timeout) {
     //    GetProcessDetails();
     //}
 
-    //var poll = $interval(function () {
-    //    GetStatus();
-    //},10000)
+    var poll = $interval(function () {
+        $('[data-toggle="popover"]').popover();
+    },1000)
 
     //$scope.executeTask = function () {
     //    var email = "";

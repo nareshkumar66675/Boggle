@@ -2,10 +2,10 @@
 <html>
 <head>
     <link href="Content/bootstrap.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="Scripts/jquery-3.3.1.min.js"></script>
     <script src="Scripts/bootstrap.min.js"></script>
-    <script src="Scripts/angular.min.js"></script>
-    
+    <script src="Scripts/angular.min.js"></script>   
     <script src="App.js"></script>
     <meta charset="utf-8" />
     <link href="Content/app.css" rel="stylesheet" />
@@ -48,9 +48,9 @@
                 </span>
             </div>
     </div>-->
-        <!--<div class="topPad15">
+        <!--<div class="topPad15" collapseElem>
             <div class="row col-8 justify-content-start">
-                <h4><a target="_blank" class="link-color" href="https://en.wikipedia.org/wiki/India">India - Wikipedia</a> </h4>
+                <h4><a title="More Details" data-toggle="popover" data-trigger="hover" data-content="Similarity:" target="_blank"   class="link-color" href="https://en.wikipedia.org/wiki/India">India - Wikipedia</a> </h4>
             </div>
             <div class="row col-8 justify-content-start line-heighp5">
                 <cite><a target="_blank" class="sub-link-color" href="https://en.wikipedia.org/wiki/India">https://en.wikipedia.org/wiki/India</a> </cite>
@@ -64,7 +64,11 @@
         <div>
             <div ng-repeat="result in SearchResults" class="topPad15">
                 <div class="row col-8 justify-content-start">
-                    <h4><a target="_blank" class="link-color" href="{{result.URL}}">{{result.MetaData.Title}} - {{result.MetaData.SiteName}}</a> </h4>
+                    <h4><a target="_blank" title="More Details" data-toggle="popover" data-trigger="hover" data-content="Similarity: {{result.SimValue}}  Hit:{{result.Hit}}"
+                           class="link-color" href="{{result.URL}}">{{result.MetaData.Title }} 
+                        <!--<span ng-hide="result.MetaData.Title == null">-</span> 
+                        {{result.MetaData.SiteName}}-->
+                        </a> </h4>
                 </div>
                 <div class="row col-8 justify-content-start line-heighp5">
                     <cite><a target="_blank" class="sub-link-color" href="{{result.URL}}">{{result.Key}}</a> </cite>
@@ -78,6 +82,11 @@
         </div>
 
         </div>
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
 </body>
 
 </html>
